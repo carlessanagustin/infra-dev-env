@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "Infrastructure Development Environment v1.2\n"
+echo -e "Infrastructure Development Environment v1.3\n"
 
 echo "Versions:"
 sleep 0.5
@@ -26,5 +26,7 @@ pip list 2>/dev/null|grep awscli
 echo -n "gcloud: " && gcloud --version |head -1 | cut -d' ' -f4
 # azure
 az --version | head -1
+# rack
+rack version | head -1
 
-echo -e "\nUsage: docker run -ti shawnxlw/ide bash"
+echo -e "\nUsage: make interactive"
