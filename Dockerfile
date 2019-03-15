@@ -11,10 +11,15 @@ ARG RACK_VERSION=1.2
 # update and install essential packages
 RUN yum update -y \
     && yum install epel-release -y \
-    && yum install vim git tmux telnet zip unzip python2-pip -y
+    && yum install vim git tmux telnet nc zip unzip -y \
+    && yum install python2-pip python36 python36-pip -y
+
+# install libcloud
+RUN pip install apache-libcloud
 
 # install ansible
-RUN yum install ansible -y
+RUN yum install ansible -y \
+    && pip install pywinrm
 
 # install ansible tower cli tool
 RUN pip install ansible-tower-cli
@@ -62,5 +67,6 @@ RUN curl -sSL https://codeload.github.com/shawnxlw/kubernetes-tools/zip/v${KTOOL
 ADD versions.sh /versions.sh
 RUN chmod 755 /versions.sh \
     && export PATH=$PATH:/usr/local/bin
+
 ENTRYPOINT [ "/bin/bash", "-c" ]
 CMD [ "/versions.sh" ]
