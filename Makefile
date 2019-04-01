@@ -1,15 +1,18 @@
-VERSION ?= v1.3
+VERSION ?= v1.4
 ADHOC ?= ""
-MOUNT ?= /root
+MOUNT ?= /shared
+
+build:
+	docker build . --tag tools:${VERSION}
 
 versions:
 	docker run tools:${VERSION}
 
 interactive:
-	docker run -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
+	docker run --privileged=false -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
+
+home:
+	docker run --privileged=false -v ${HOME}:/root -ti tools:${VERSION} bash
 
 run:
 	docker run tools:${VERSION} '${ADHOC}'
-
-build:
-	docker build . --tag tools:${VERSION}

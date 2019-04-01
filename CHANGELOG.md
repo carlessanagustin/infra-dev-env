@@ -1,5 +1,9 @@
 # Release Notes
 
+15/03/19: v1.4
+
+* Added libcloud, pywinrm & python 3.6
+
 1/03/19: v1.3
 
 * Added Rackspace CLI

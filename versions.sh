@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "Infrastructure Development Environment v1.3\n"
+echo -e "Infrastructure Development Environment v1.4\n"
 
 echo "Versions:"
 sleep 0.5

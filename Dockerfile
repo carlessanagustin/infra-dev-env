@@ -11,7 +11,7 @@ ARG RACK_VERSION=1.2
 # update and install essential packages
 RUN yum update -y \
     && yum install epel-release -y \
-    && yum install vim git tmux telnet nc zip unzip -y \
+    && yum install make sshpass vim git tmux telnet nc zip unzip -y \
     && yum install python2-pip python36 python36-pip -y
 
 # install libcloud
@@ -68,5 +68,7 @@ ADD versions.sh /versions.sh
 RUN chmod 755 /versions.sh \
     && export PATH=$PATH:/usr/local/bin
 
+WORKDIR /root
 ENTRYPOINT [ "/bin/bash", "-c" ]
 CMD [ "/versions.sh" ]
+USER root
