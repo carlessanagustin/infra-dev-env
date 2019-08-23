@@ -9,6 +9,7 @@ A docker image that contains the necessary tools for doing Infrastructure Develo
 * Openshift CLI
 * Terraform
 * kubectl
+* Helm
 * Kubernetes Tools
 * kops
 * AWS CLI
@@ -20,5 +21,6 @@ A docker image that contains the necessary tools for doing Infrastructure Develo
 
 * build: `make build`
 * display all versions: `make versions`
-* interactive shell + mount: `make interactive`
+* interactive shell + mount $HOME folders: `make home`
+* interactive shell + mount current folder: `make interactive`
 * adhoc commands: `make run ADHOC="<command>"`
