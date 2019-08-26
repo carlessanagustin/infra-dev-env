@@ -9,7 +9,7 @@ versions:
 	docker run tools:${VERSION}
 
 interactive:
-	docker run --privileged=false -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
+	docker run --privileged=false -v ${HOME}:/root -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
 
 home:
 	docker run --privileged=false -v ${HOME}:/root -ti tools:${VERSION} bash

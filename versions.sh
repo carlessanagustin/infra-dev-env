@@ -23,7 +23,7 @@ az --version | head -1
 # rack
 rack version | head -1
 # helm
-helm version --short | grep -i client | cut -d' ' -f2
+echo -n "helm: " && helm version --short | grep -i client | cut -d' ' -f2
 # kops
 echo -n "kops: " && kops version | head -1 | cut -d' ' -f2
 # kubectl
