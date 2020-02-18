@@ -1,4 +1,4 @@
-VERSION ?= v1.3
+VERSION ?= v1.4
 ADHOC ?= ""
 MOUNT ?= /root
 
@@ -8,8 +8,8 @@ versions:
 interactive:
 	docker run -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
 
-run:
-	docker run tools:${VERSION} '${ADHOC}'
+home:
+	docker run -v $HOME:${MOUNT} -ti tools:${VERSION} bash
 
 build:
 	docker build . --tag tools:${VERSION}

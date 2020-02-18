@@ -1,5 +1,14 @@
 # Release Notes
 
+18/02/20: v1.4
+
+* Changed to Fedora 31
+* Added `kubectl`
+* Added `make home`
+* Removed `make run`
+* Added .gitignore
+* WIP for other clients
+
 1/03/19: v1.3
 
 * Added Rackspace CLI
