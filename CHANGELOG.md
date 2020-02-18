@@ -3,10 +3,9 @@
 18/02/20: v1.4
 
 * Changed to Fedora 31
-* Added `kubectl`
-* Added `make home`
-* Removed `make run`
-* Added .gitignore
+* Added `kubectl`, `make home`, `make run`, oh my zsh & `.gitignore`
+* Removed rack cli, kops, kubernetes tools & ansible tower cli tool
+* Updated google-cloud-sdk
 * WIP for other clients
 
 1/03/19: v1.3
