@@ -5,7 +5,7 @@ versions:
 	docker run tools:${VERSION}
 
 interactive:
-	docker run -v `pwd`:${MOUNT} -ti tools:${VERSION} bash
+	docker run -v `pwd`:/shared -ti tools:${VERSION} bash
 
 home:
 	docker run -v ${HOME}:${MOUNT} -ti tools:${VERSION} bash

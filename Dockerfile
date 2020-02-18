@@ -3,7 +3,7 @@ LABEL maintainer="https://twitter.com/carlesanagustin"
 
 ## update and install essential packages
 RUN dnf upgrade -y && \
-    dnf install -y vim curl git tmux telnet zip unzip bash-completion git && \
+    dnf install -y vim curl git tmux telnet zip unzip bash-completion git zsh && \
     dnf install -y python3-ipython python3-ipdb python3-pip 
 
 # export KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
@@ -40,22 +40,26 @@ RUN dnf install -y awscli && \
 RUN echo -e '[google-cloud-sdk]\nname=Google Cloud SDK\nbaseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg\n       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg' > /etc/yum.repos.d/google-cloud-sdk.repo && \
     yum update -y && yum install -y google-cloud-sdk
 
-# install powershell
-RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
-    curl -o /etc/yum.repos.d/microsoft.repo https://packages.microsoft.com/config/rhel/7/prod.repo && \
-    dnf install -y compat-openssl10 powershell
+## install powershell
+#RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
+#    curl -o /etc/yum.repos.d/microsoft.repo https://packages.microsoft.com/config/rhel/7/prod.repo && \
+#    dnf install -y compat-openssl10 powershell
 
 # install azure cli tool
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
     echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo && \
     yum -y install azure-cli
 
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+## chsh -s $(which zsh)
+## usermod -s /usr/bin/zsh $USERNAME
+
 WORKDIR /root
 
-ENTRYPOINT [ "/bin/bash", "-c" ]
+#ENTRYPOINT [ "/bin/bash", "-c" ]
 
 ADD versions.sh /versions.sh
 RUN chmod 755 /versions.sh && export PATH=$PATH:/usr/local/bin
-CMD [ "/versions.sh" ]
+CMD [ "/usr/bin/bash", "-c", "/versions.sh" ]
 
 #CMD ["printenv | grep -i version"]
