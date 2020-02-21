@@ -10,6 +10,9 @@ interactive:
 home:
 	docker run -v ${HOME}:${MOUNT} -ti tools:${VERSION} bash
 
+homez:
+	docker run -v ${HOME}:${MOUNT} -ti tools:${VERSION} zsh
+
 build:
 	docker build . --tag tools:${VERSION}
 

@@ -3,7 +3,7 @@
 18/02/20: v1.4
 
 * Changed to Fedora 31
-* Added `kubectl`, `make home`, `make run` & `.gitignore`
+* Added aws-iam-authenticator, kubectl, make home, make run & .gitignore
 * Removed rack cli, kops, kubernetes tools & ansible tower cli tool
 * Updated google-cloud-sdk
 * WIP for other clients
