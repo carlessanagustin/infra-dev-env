@@ -16,6 +16,7 @@ A docker image that contains the necessary tools for doing Infrastructure Develo
 * Google Cloud CLI
 * Azure CLI
 * docker-ce-cli
+* Docker Compose
 
 ## Usage
 

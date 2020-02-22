@@ -24,5 +24,6 @@ echo -n "gcloud: " && gcloud --version |head -1 | cut -d' ' -f4
 az --version | head -1
 # docker-ce-cli
 echo -n "Docker cli: " && docker version --format '{{.Client.Version}}'
+docker-compose version | grep -i docker-compose
 
 echo -e "\nUsage: make interactive"

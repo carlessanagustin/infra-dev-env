@@ -7,12 +7,14 @@ RUN dnf upgrade -y && \
     dnf install -y python3-ipython python3-ipdb python3-pip && \
     dnf -y install dnf-plugins-core
 
-# export KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+ENV BIN_PATH=/usr/local/bin
 ENV TOOLS_VERSION=1.4
 ENV OPENSHIFT_VERSION=v3.11.0-0cbc58b
 ENV TERRAFORM_VERSION=0.12.20
+# export KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 ENV KUBECTL_VERSION=v1.17.3
 ENV AWSAUTH_VERSION=1.14.6
+ENV DCOMPOSE_VERSION=1.25.4
 
 ENV MACUSR=carles
 
@@ -25,12 +27,12 @@ RUN export OPENSHIFT_VERSION_NUMBER=$(echo $OPENSHIFT_VERSION | cut -d'-' -f1) &
 
 # install terraform
 RUN curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o ./terraform.zip && \
-    unzip ./terraform.zip -d /usr/local/bin/ && \
+    unzip ./terraform.zip -d $BIN_PATH && \
     rm -f ./terraform.zip
 
 # install kubectl
-RUN curl -sSL https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
-    chmod +x /usr/local/bin/kubectl && \
+RUN curl -sSL https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o $BIN_PATH/kubectl && \
+    chmod +x $BIN_PATH/kubectl && \
     dnf -y copr enable cerenit/kubectx && \
     dnf -y install kubectx
 
@@ -40,12 +42,12 @@ RUN dnf install -y ansible && \
 
 # install aws tools
 RUN dnf install -y awscli && \
-    curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest && \
-    chmod +x /usr/local/bin/ecs-cli && \
-    curl -o /usr/local/bin/ec2.py https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.py && \
-    chmod +x /usr/local/bin/ec2.py && \
-    curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSAUTH_VERSION}/2019-08-22/bin/linux/amd64/aws-iam-authenticator && \
-    chmod +x /usr/local/bin/aws-iam-authenticator
+    curl -o $BIN_PATH/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest && \
+    chmod +x $BIN_PATH/ecs-cli && \
+    curl -o $BIN_PATH/ec2.py https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.py && \
+    chmod +x $BIN_PATH/ec2.py && \
+    curl -o $BIN_PATH/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSAUTH_VERSION}/2019-08-22/bin/linux/amd64/aws-iam-authenticator && \
+    chmod +x $BIN_PATH/aws-iam-authenticator
 
 # install google cloud sdk
 RUN echo -e '[google-cloud-sdk]\nname=Google Cloud SDK\nbaseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg\n       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg' > /etc/yum.repos.d/google-cloud-sdk.repo && \
@@ -64,10 +66,13 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
 # install docker-ce-cli
 RUN dnf -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine && \
     dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo && \
-    dnf -y install docker-ce-cli
+    dnf -y install docker-ce-cli && \
+    curl -o $BIN_PATH/docker-compose -L "https://github.com/docker/compose/releases/download/${DCOMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" && \
+    chmod +x $BIN_PATH/docker-compose
 
-ADD versions.sh /versions.sh
-RUN chmod 755 /versions.sh && export PATH=$PATH:/usr/local/bin
+ADD versions.sh $BIN_PATH/versions.sh
+RUN chmod 755 $BIN_PATH/versions.sh && \
+    export PATH=$PATH:$BIN_PATH
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 RUN useradd -m -s /usr/bin/zsh ${MACUSR}

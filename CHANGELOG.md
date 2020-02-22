@@ -3,7 +3,7 @@
 22/02/20: v1.4
 
 * Changed to Fedora 31
-* Added ec2.py, ecs-cli, docker-ce-cli, python3-boto3, python3-botocore, python3-boto, python3-azure-sdk, python3-libcloud, aws-iam-authenticator, kubectx, make home, make run, make homez & .gitignore
+* Added docker-compose, ec2.py, ecs-cli, docker-ce-cli, python3-boto3, python3-botocore, python3-boto, python3-azure-sdk, python3-libcloud, aws-iam-authenticator, kubectx, make home, make run, make homez & .gitignore
 * Removed rack cli, kops, kubernetes tools & ansible tower cli tool
 * Updated google-cloud-sdk & kubectl
 * WIP for other clients
