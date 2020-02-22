@@ -1,24 +1,24 @@
 # Release Notes
 
-18/02/20: v1.4
+22/02/20: v1.4
 
 * Changed to Fedora 31
-* Added aws-iam-authenticator, kubectl, make home, make run & .gitignore
+* Added ec2.py, ecs-cli, docker-ce-cli, python3-boto3, python3-botocore, python3-boto, python3-azure-sdk, python3-libcloud, aws-iam-authenticator, kubectx, make home, make run, make homez & .gitignore
 * Removed rack cli, kops, kubernetes tools & ansible tower cli tool
-* Updated google-cloud-sdk
+* Updated google-cloud-sdk & kubectl
 * WIP for other clients
 
-1/03/19: v1.3
+01/03/19: v1.3
 
 * Added Rackspace CLI
 * Fix terraform.zip deletion
 * Created Makefile with common instructions
 
-7/02/19: v1.2
+07/02/19: v1.2
 
 * Added Kubernetes Tools
 
-5/02/19: v1.1
+05/02/19: v1.1
 
 * Added Ansible Tower CLI
 * Added Openshift CLI

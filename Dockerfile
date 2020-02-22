@@ -4,13 +4,16 @@ LABEL maintainer="https://twitter.com/carlesanagustin"
 ## update and install essential packages
 RUN dnf upgrade -y && \
     dnf install -y vim curl git tmux telnet zip unzip bash-completion git zsh jq && \
-    dnf install -y python3-ipython python3-ipdb python3-pip 
+    dnf install -y python3-ipython python3-ipdb python3-pip && \
+    dnf -y install dnf-plugins-core
 
 # export KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+ENV TOOLS_VERSION=1.4
 ENV OPENSHIFT_VERSION=v3.11.0-0cbc58b
 ENV TERRAFORM_VERSION=0.12.20
 ENV KUBECTL_VERSION=v1.17.3
 ENV AWSAUTH_VERSION=1.14.6
+
 ENV MACUSR=carles
 
 ## install openshift cli
@@ -27,11 +30,13 @@ RUN curl -sSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terr
 
 # install kubectl
 RUN curl -sSL https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
-    chmod +x /usr/local/bin/kubectl
+    chmod +x /usr/local/bin/kubectl && \
+    dnf -y copr enable cerenit/kubectx && \
+    dnf -y install kubectx
 
 # install ansible
 RUN dnf install -y ansible && \
-    dnf install -y python3-boto3 python3-botocore python3-boto
+    dnf install -y python3-boto3 python3-botocore python3-boto python3-azure-sdk python3-libcloud
 
 # install aws tools
 RUN dnf install -y awscli && \
@@ -55,6 +60,11 @@ RUN echo -e '[google-cloud-sdk]\nname=Google Cloud SDK\nbaseurl=https://packages
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
     echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo && \
     yum -y install azure-cli
+
+# install docker-ce-cli
+RUN dnf -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine && \
+    dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo && \
+    dnf -y install docker-ce-cli
 
 ADD versions.sh /versions.sh
 RUN chmod 755 /versions.sh && export PATH=$PATH:/usr/local/bin

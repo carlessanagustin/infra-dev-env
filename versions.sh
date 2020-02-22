@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "Infrastructure Development Environment v1.3\n"
+echo -e ">> Infrastructure Development Environment v$TOOLS_VERSION"
 
 echo "Versions:"
 sleep 0.5
@@ -22,5 +22,7 @@ echo -n "aws-iam-authenticator: " && aws-iam-authenticator version | jq '.Versio
 echo -n "gcloud: " && gcloud --version |head -1 | cut -d' ' -f4
 # azure
 az --version | head -1
+# docker-ce-cli
+echo -n "Docker cli: " && docker version --format '{{.Client.Version}}'
 
 echo -e "\nUsage: make interactive"
