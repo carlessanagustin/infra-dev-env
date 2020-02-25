@@ -1,4 +1,4 @@
-VERSION ?= v1.4
+VERSION ?= 1.4
 MOUNT ?= /root
 
 versions:
