@@ -78,8 +78,7 @@ RUN dnf -y remove docker docker-client docker-client-latest docker-common docker
     chmod +x $BIN_PATH/docker-compose
 
 ADD versions.sh $BIN_PATH/versions.sh
-RUN chmod 755 $BIN_PATH/versions.sh && \
-    export PATH=$PATH:$BIN_PATH:$HOME/.local/bin
+RUN chmod 755 $BIN_PATH/versions.sh
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
@@ -90,4 +89,5 @@ RUN mkdir -p /Users && ln -s /root /Users/${MACUSR}
 WORKDIR /root
 #WORKDIR /Users/${MACUSR}
 
+ENV PATH="${PATH}:${BIN_PATH}:${HOME}/.local/bin"
 CMD [ "/usr/bin/bash", "-c", "/versions.sh" ]
