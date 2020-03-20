@@ -15,6 +15,7 @@ ENV TERRAFORM_VERSION=0.12.20
 ENV KUBECTL_VERSION=v1.17.3
 ENV AWSAUTH_VERSION=1.14.6
 ENV DCOMPOSE_VERSION=1.25.4
+ENV YQ_VERSION=3.1.2
 
 ENV MACUSR=carles
 
@@ -80,7 +81,9 @@ RUN dnf -y remove docker docker-client docker-client-latest docker-common docker
 ADD versions.sh $BIN_PATH/versions.sh
 RUN chmod 755 $BIN_PATH/versions.sh
 
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# install yq + ohmyzsh
+RUN curl -o $BIN_PATH/yq -L https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 && \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 #RUN useradd -m -s /usr/bin/zsh ${MACUSR}
 #USER ${MACUSR}
