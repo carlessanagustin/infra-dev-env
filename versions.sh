@@ -21,7 +21,7 @@ echo -n "aws-iam-authenticator: " && aws-iam-authenticator version | jq '.Versio
 # gcloud
 echo -n "gcloud: " && gcloud --version |head -1 | cut -d' ' -f4
 # azure
-az --version | head -1
+az version | head -2 | tail -1
 # docker-ce-cli
 echo -n "Docker cli: " && docker version --format '{{.Client.Version}}'
 docker-compose version | grep -i docker-compose
